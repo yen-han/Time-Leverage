@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} bg-warning bg-opacity-10`}>
         <Menu />
-        <div className="container mt-5">
+        <div className="container mt-5 px-5">
           <div className="row">
             <div className="col-sm-6 col-xs-12">
               <Chart />
