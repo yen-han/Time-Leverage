@@ -1,8 +1,11 @@
 function Menu() {
   return (
-    <nav className={`navbar navbar-expand-lg bg-dark`} data-bs-theme="dark">
+    <nav
+      className={`navbar navbar-dark navbar-expand-lg bg-dark`}
+      data-bs-theme="dark"
+    >
       <div className="container-fluid">
-        <a className="navbar-brand link-light" href="#">
+        <a className="navbar-brand " href="#">
           Time Leverage
         </a>
         <button
@@ -14,26 +17,22 @@ function Menu() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon text-warning "></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a
-                className="nav-link active link-light"
-                aria-current="page"
-                href="#"
-              >
+              <a className="nav-link active" aria-current="page" href="#">
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link link-light" href="#">
+              <a className="nav-link" href="#">
                 Statistics
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link link-light" href="#">
+              <a className="nav-link" href="#">
                 Tags
               </a>
             </li>
