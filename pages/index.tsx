@@ -4,11 +4,18 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
 import Menu from "@/components/Menu/Menu";
 import Chart from "@/components/Chart/Chart";
+import TimeBlock from "@/components/TimeBlock/TimeBlock";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Home() {
   const [selectDate, setSelectDate] = useState(new Date());
+  let dummyData = {
+    start: new Date(2017, 4, 4, 17, 23, 42, 11),
+    end: new Date(2017, 4, 4, 19, 23, 42, 11),
+    title: "Title",
+    description: "Description",
+  };
   return (
     <>
       <Head>
@@ -32,6 +39,7 @@ export default function Home() {
                   if (date) setSelectDate(date);
                 }}
               />
+              <TimeBlock data={dummyData} />
             </div>
           </div>
         </div>
