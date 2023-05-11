@@ -26,11 +26,12 @@ export default function Home() {
       </Head>
       <main className={`${styles.Home} bg-warning bg-opacity-10`}>
         <Menu />
-        <div className="container mt-5 px-5">
+        <div className={`container mt-5 px-5 px-sm-2`}>
           <div className="row">
-            <div className="col-sm-6 col-xs-12">
+            <div className="col-sm-5 col-xs-12 mb-5">
               <Chart />
             </div>
+            <div className="col-sm-1 col-xs-12"></div>
             <div className={`col-sm-6 col-xs-12`}>
               <DatePicker
                 className={`${styles.datepicker}`}
