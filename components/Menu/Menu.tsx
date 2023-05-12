@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Menu() {
   return (
     <nav
@@ -5,9 +7,9 @@ function Menu() {
       data-bs-theme="dark"
     >
       <div className="container-fluid">
-        <a className="navbar-brand " href="#">
+        <Link className="navbar-brand " href="/">
           Time Leverage
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,9 +24,9 @@ function Menu() {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <Link className="nav-link" aria-current="page" href="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
@@ -32,9 +34,9 @@ function Menu() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" href="tags">
                 Tags
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
