@@ -3,12 +3,17 @@ export type Props = {
   data: {
     id: number;
     title: string;
+    fontColor: string;
+    bgColor: string;
     icon: JSX.Element;
   };
 };
 function Tag({ data }: Props) {
   return (
-    <div className={`${styles.tag}`}>
+    <div
+      className={`${styles.tag}`}
+      style={{ backgroundColor: data.bgColor, color: data.fontColor }}
+    >
       <p className={`${styles.tagName}`}>
         <span className={`${styles.tagIcon}`}>{data.icon}</span>
         {data.title}
