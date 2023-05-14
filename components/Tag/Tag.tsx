@@ -1,9 +1,19 @@
 import styles from "./tag.module.scss";
-
-function Tag() {
+export type Props = {
+  data: {
+    id: number;
+    title: string;
+    icon: JSX.Element;
+  };
+};
+function Tag({ data }: Props) {
   return (
     <div className={`${styles.tag}`}>
-      <span className={`${styles.tagName}`}>Sleep</span>
+      <p className={`${styles.tagName}`}>
+        <span className={`${styles.tagIcon}`}>{data.icon}</span>
+        {data.title}
+      </p>
+
       <div className={`${styles.buttonGroup}`}>
         <button
           type="button"

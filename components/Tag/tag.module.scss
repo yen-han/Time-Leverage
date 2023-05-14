@@ -16,11 +16,16 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+
+    .tagIcon {
+      margin-right: 0.5rem;
+    }
   }
 
   .buttonGroup {
-    top: 20%;
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     right: 2%;
 
     .customButton {
