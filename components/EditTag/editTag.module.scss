@@ -1,0 +1,52 @@
+.editTag {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--bs-gray-400);
+
+  .relative {
+    position: relative;
+  }
+
+  .iconDefault {
+    width: 2.2rem;
+    height: 2.2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid var(--bs-gray-400);
+    border-radius: 50%;
+    padding: 0.25rem;
+
+    &:hover {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+    }
+  }
+  .iconPick {
+    background-color: #fff;
+    z-index: 3;
+    width: 200px;
+    position: absolute;
+    height: 100px;
+    top: 110%;
+    border-radius: 4px;
+  }
+
+  .colorPick {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+
+    &::-webkit-color-swatch {
+      border-radius: 50%;
+    }
+
+    &::-moz-color-swatch {
+      border-radius: 50%;
+    }
+  }
+}

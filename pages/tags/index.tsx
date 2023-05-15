@@ -1,5 +1,6 @@
 import Menu from "@/components/Menu/Menu";
 import Tag from "@/components/Tag/Tag";
+import EditTag from "@/components/EditTag/EditTag";
 import styles from "./tags.module.scss";
 
 export default function Tags() {
@@ -51,11 +52,12 @@ export default function Tags() {
             <div className="col-sm-6 col-xs-12">
               <h1 className="mb-4">Tags</h1>
               {dummyTags.map((tag, index) => (
-                <Tag key={index} data={tag}></Tag>
+                <Tag key={index} data={tag} />
               ))}
-              {/* // <Tag /> */}
             </div>
-            <div className={`col-sm-6 col-xs-12`}></div>
+            <div className={`col-sm-6 col-xs-12`}>
+              <EditTag />
+            </div>
           </div>
         </div>
       </div>
