@@ -1,0 +1,22 @@
+.hover {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0.2rem;
+  padding: 0.3rem;
+  display: inline-block;
+  position: relative;
+
+  &:hover {
+    background-color: var(--bs-gray-400);
+    border-radius: 50%;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
