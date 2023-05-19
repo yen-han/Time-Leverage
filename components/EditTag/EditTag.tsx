@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./editTag.module.scss";
 import IconPicker from "@/components/IconPicker/IconPicker";
+import axios from "axios";
 
 function EditTag() {
   const [toggle, setToggle] = useState(false);
@@ -16,7 +17,10 @@ function EditTag() {
     formData.set("iconClass", icon.class);
     formData.set("iconPath", icon.path);
     let formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    // console.log(formDataObj);
+    axios.post("/api/tags", formDataObj).then((res) => {
+      console.log(res);
+    });
   }
 
   function CallBack(SelectedIcon: { class: string; path: string }) {
@@ -34,8 +38,8 @@ function EditTag() {
           <input
             type="text"
             className="form-control"
-            id="tagName"
-            name="tagName"
+            id="title"
+            name="title"
             aria-describedby="tagFeedback"
             required
           />
@@ -79,8 +83,8 @@ function EditTag() {
           <input
             className={`${styles.colorPick}`}
             type="color"
-            id="tagColor"
-            name="tagColor"
+            id="bgColor"
+            name="bgColor"
             value={color}
             onChange={(e) => setColor(e.target.value)}
           />

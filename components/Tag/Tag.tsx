@@ -1,21 +1,33 @@
 import styles from "./tag.module.scss";
-export type Props = {
+export type Tag = {
   data: {
-    id: number;
+    userId: string;
     title: string;
     fontColor: string;
     bgColor: string;
-    icon: JSX.Element;
+    iconClass: string;
+    iconPath: string;
   };
 };
-function Tag({ data }: Props) {
+function Tag({ data }: Tag) {
   return (
     <div
       className={`${styles.tag}`}
       style={{ backgroundColor: data.bgColor, color: data.fontColor }}
     >
       <p className={`${styles.tagName}`}>
-        <span className={`${styles.tagIcon}`}>{data.icon}</span>
+        <span className={`${styles.tagIcon}`}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className={`${data.iconClass} bi`}
+            viewBox="0 0 16 16"
+          >
+            <path d={data.iconPath} />
+          </svg>
+        </span>
         {data.title}
       </p>
 
