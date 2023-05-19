@@ -1,19 +1,17 @@
 import styles from "./tag.module.scss";
-export type Tag = {
-  data: {
-    userId: string;
-    title: string;
-    fontColor: string;
-    bgColor: string;
-    iconClass: string;
-    iconPath: string;
-  };
+export type tag = {
+  userId: string;
+  title: string;
+  fontColor: string;
+  bgColor: string;
+  iconClass: string;
+  iconPath: string;
 };
-function Tag({ data }: Tag) {
+function Tag({ props }: any) {
   return (
     <div
       className={`${styles.tag}`}
-      style={{ backgroundColor: data.bgColor, color: data.fontColor }}
+      style={{ backgroundColor: props.bgColor, color: props.fontColor }}
     >
       <p className={`${styles.tagName}`}>
         <span className={`${styles.tagIcon}`}>
@@ -22,13 +20,13 @@ function Tag({ data }: Tag) {
             width="16"
             height="16"
             fill="currentColor"
-            className={`${data.iconClass} bi`}
+            className={`${props.iconClass} bi`}
             viewBox="0 0 16 16"
           >
-            <path d={data.iconPath} />
+            <path d={props.iconPath} />
           </svg>
         </span>
-        {data.title}
+        {props.title}
       </p>
 
       <div className={`${styles.buttonGroup}`}>
