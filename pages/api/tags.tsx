@@ -14,7 +14,7 @@ export const getAllTags = async (): Promise<{}> => {
   return JSON.parse(JSON.stringify(data));
 };
 
-export const createTag = async (tag: tag): Promise<ObjectId> => {
+export const createTag = async (tag: any): Promise<ObjectId> => {
   const mongoClient = await clientPromise;
 
   const response = await mongoClient
@@ -29,22 +29,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // await NextCors(req, res, {
-  //   methods: ["GET", "POST"],
-  //   origin: [
-  //     "http://localhost:3000",
-  //     "http://localhost:3001",
-  //     "http://localhost:3002",
-  //   ],
-  //   optionsSuccessStatus: 200,
-  // });
-  console.log(req.body);
+  console.log(req.method);
   if (req.method === "GET") {
     const data = await getAllTags();
     res.json({ tags: data });
   } else if (req.method === "POST") {
     if (req.body.title) {
-      const tag: tag = {
+      const tag = {
         userId: "0",
         title: req.body.title,
         fontColor: "#000",

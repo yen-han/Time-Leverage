@@ -1,5 +1,6 @@
 import styles from "./tag.module.scss";
 export type tag = {
+  id: string;
   userId: string;
   title: string;
   fontColor: string;
