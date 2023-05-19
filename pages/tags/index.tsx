@@ -1,29 +1,19 @@
 import Menu from "@/components/Menu/Menu";
+import { tag } from "@/components/Tag/Tag";
 import Tag from "@/components/Tag/Tag";
 import EditTag from "@/components/EditTag/EditTag";
 import styles from "./tags.module.scss";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Tags() {
-  let dummyTags = [
-    {
-      userId: "1",
-      title: "Sleep",
-      fontColor: "inherit",
-      bgColor: "#faebd7",
-      iconClass: "bi-moon-fill",
-      iconPath:
-        "M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z",
-    },
-    {
-      userId: "2",
-      title: "Sleep",
-      fontColor: "inherit",
-      bgColor: "#27a567",
-      iconClass: "bi-moon-fill",
-      iconPath:
-        "M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z",
-    },
-  ];
+  const [tags, setTags] = useState<tag[]>([]);
+  useEffect(() => {
+    axios.get("/api/tags").then((res) => {
+      setTags(res.data.tags);
+      console.log(res.data.tags);
+    });
+  }, []);
 
   return (
     <>
@@ -33,8 +23,8 @@ export default function Tags() {
           <div className="row">
             <div className="col-sm-6 col-xs-12">
               <h1 className="mb-4">Tags</h1>
-              {dummyTags.map((tag, index) => (
-                <Tag key={index} data={tag} />
+              {tags.map((tag, index) => (
+                <Tag key={index} props={tag} />
               ))}
             </div>
             <div className={`col-sm-6 col-xs-12`}>
