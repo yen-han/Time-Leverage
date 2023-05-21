@@ -9,12 +9,15 @@ import { useEffect, useState } from "react";
 export default function Tags() {
   const [tags, setTags] = useState<tag[]>([]);
   useEffect(() => {
-    axios.get("/api/tags").then((res) => {
-      setTags(res.data.tags);
-      console.log(res.data.tags);
-    });
-  }, []);
-
+    axios
+      .get("/api/tag")
+      .then((res) => {
+        setTags(res.data.tags);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [tags]);
   return (
     <>
       <div className={`${styles.Tags} bg-warning bg-opacity-10`}>

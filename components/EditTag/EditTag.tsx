@@ -17,10 +17,14 @@ function EditTag() {
     formData.set("iconClass", icon.class);
     formData.set("iconPath", icon.path);
     let formDataObj = Object.fromEntries(formData.entries());
-    // console.log(formDataObj);
-    axios.post("/api/tags", formDataObj).then((res) => {
-      console.log(res);
-    });
+    axios
+      .post("/api/tag", formDataObj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function CallBack(SelectedIcon: { class: string; path: string }) {

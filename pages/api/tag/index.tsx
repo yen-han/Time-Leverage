@@ -29,7 +29,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.method);
   if (req.method === "GET") {
     const data = await getAllTags();
     res.json({ tags: data });
