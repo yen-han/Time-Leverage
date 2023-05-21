@@ -1,6 +1,8 @@
 import styles from "./tag.module.scss";
+import axios from "axios";
+
 export type tag = {
-  id: string;
+  _id: string;
   userId: string;
   title: string;
   fontColor: string;
@@ -9,6 +11,12 @@ export type tag = {
   iconPath: string;
 };
 function Tag({ props }: any) {
+  function trashTag(id: any) {
+    axios.delete(`/api/tag/${id}`).then((res) => {
+      console.log(res);
+    });
+  }
+
   return (
     <div
       className={`${styles.tag}`}
@@ -49,6 +57,8 @@ function Tag({ props }: any) {
         <button
           type="button"
           className={`${styles.customButton} btn btn-light`}
+          onClick={(e) => trashTag(props._id)}
+          id={props._id}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
