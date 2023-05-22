@@ -3,4 +3,20 @@
   width: 100%;
   padding: 0;
   margin: 0;
+  padding-bottom: 2rem;
+
+  @media screen and (max-width: 576px) {
+    height: auto;
+  }
+
+  .newTag {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .newTagIcon {
+      margin-right: 0.5rem;
+      scale: 1.5;
+      margin-top: -0.2rem;
+    }
+  }
 }
