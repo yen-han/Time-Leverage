@@ -23,22 +23,33 @@ function EditTag({ type, props }: Props) {
       setColor(props.tag.bgColor);
       setIcon({ class: props.tag.iconClass, path: props.tag.iconPath });
     }
-    // console.log(type, props);
   }, [props]);
+
   function onSubmit(event: any) {
     event.preventDefault();
     const formData = new FormData(event.target);
     formData.set("iconClass", icon.class);
     formData.set("iconPath", icon.path);
     let formDataObj = Object.fromEntries(formData.entries());
-    axios
-      .post("/api/tag", formDataObj)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (type == "edit") {
+      axios
+        .put(`/api/tag/${props.tag._id}`, formDataObj)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post("/api/tag", formDataObj)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   function CallBack(SelectedIcon: { class: string; path: string }) {
