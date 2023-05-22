@@ -118,7 +118,7 @@ function EditTag({ type, props }: Props) {
         className="btn btn-primary mt-4"
         style={{ display: "flex", margin: "auto" }}
       >
-        Submit
+        {type == "edit" ? "Update" : "Submit"}
       </button>
     </form>
   );
