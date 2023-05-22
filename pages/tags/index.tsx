@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 
 export default function Tags() {
   const [tags, setTags] = useState<tag[]>([]);
+  const [selectedTag, setSelectedTag] = useState<{}>();
+  const [label, setLabel] = useState<string>("new");
   useEffect(() => {
     axios
       .get("/api/tag")
@@ -18,6 +20,13 @@ export default function Tags() {
         console.log(err);
       });
   }, [tags]);
+
+  function CallBack(info: any) {
+    setSelectedTag(info);
+    setLabel("edit");
+    return;
+  }
+
   return (
     <>
       <div className={`${styles.Tags} bg-warning bg-opacity-10`}>
@@ -27,11 +36,11 @@ export default function Tags() {
             <div className="col-sm-6 col-xs-12">
               <h1 className="mb-4">Tags</h1>
               {tags.map((tag, index) => (
-                <Tag key={index} props={tag} />
+                <Tag key={index} tag={tag} handleCallBack={CallBack} />
               ))}
             </div>
             <div className={`col-sm-6 col-xs-12`}>
-              <EditTag />
+              <EditTag type={label} props={selectedTag} />
             </div>
           </div>
         </div>

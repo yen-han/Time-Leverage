@@ -10,17 +10,20 @@ export type tag = {
   iconClass: string;
   iconPath: string;
 };
-function Tag({ props }: any) {
-  function trashTag(id: any) {
+function Tag(tag: any) {
+  function trashTag(id: string) {
     axios.delete(`/api/tag/${id}`).then((res) => {
       console.log(res);
     });
+  }
+  function modifyTag(data: any) {
+    return tag.handleCallBack(data);
   }
 
   return (
     <div
       className={`${styles.tag}`}
-      style={{ backgroundColor: props.bgColor, color: props.fontColor }}
+      style={{ backgroundColor: tag.tag.bgColor, color: tag.tag.fontColor }}
     >
       <p className={`${styles.tagName}`}>
         <span className={`${styles.tagIcon}`}>
@@ -29,19 +32,20 @@ function Tag({ props }: any) {
             width="16"
             height="16"
             fill="currentColor"
-            className={`${props.iconClass} bi`}
+            className={`${tag.tag.iconClass} bi`}
             viewBox="0 0 16 16"
           >
-            <path d={props.iconPath} />
+            <path d={tag.tag.iconPath} />
           </svg>
         </span>
-        {props.title}
+        {tag.tag.title}
       </p>
 
       <div className={`${styles.buttonGroup}`}>
         <button
           type="button"
           className={`${styles.customButton} btn btn-light`}
+          onClick={(e) => modifyTag(tag)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,8 +61,8 @@ function Tag({ props }: any) {
         <button
           type="button"
           className={`${styles.customButton} btn btn-light`}
-          onClick={(e) => trashTag(props._id)}
-          id={props._id}
+          onClick={(e) => trashTag(tag.tag._id)}
+          id={tag.tag._id}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
