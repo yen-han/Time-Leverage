@@ -7,10 +7,12 @@ export type timeBlock = {
   tags: tag[];
 };
 function TimeBlock(timeBlock: any) {
+  const [startTime, endTime] = [
+    new Date(timeBlock.timeBlock.start),
+    new Date(timeBlock.timeBlock.end),
+  ];
   function calculateTime() {
-    let time =
-      new Date(timeBlock.timeBlock.end).getTime() -
-      new Date(timeBlock.timeBlock.start).getTime();
+    let time = endTime.getTime() - startTime.getTime();
     let hours = Math.floor(time / 3600000);
     let minutes = Math.floor((time - hours * 3600000) / 60000);
     return `${hours}h ${minutes}m`;
@@ -19,9 +21,19 @@ function TimeBlock(timeBlock: any) {
   return (
     <div className="card" style={{ marginBottom: "1rem" }}>
       <div className="card-body">
-        <h6 className="card-subtitle mb-2 text-body-secondary">
-          {calculateTime()}
+        <h6 className="card-subtitle mb-1 text-body-secondary">
+          Duration: {calculateTime()}
         </h6>
+        <p className="mb-2 text-body-tertiary">
+          {startTime.getHours()}:
+          {startTime.getMinutes() < 10
+            ? `0${startTime.getMinutes()}`
+            : startTime.getMinutes()}
+          ~{endTime.getHours()}:
+          {endTime.getMinutes() < 10
+            ? `0${endTime.getMinutes()}`
+            : endTime.getMinutes()}
+        </p>
         <h5 className="card-title">{timeBlock.timeBlock.title}</h5>
         <p className="card-text">{timeBlock.timeBlock.desc}</p>
         <div style={{ marginBottom: "1rem" }}>
