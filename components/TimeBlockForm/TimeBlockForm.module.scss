@@ -8,4 +8,38 @@
     font-size: 1.1rem;
     padding: 0.25rem 1rem;
   }
+  .addTag {
+    display: inline-block;
+    margin: 0 0.5rem;
+  }
+  .singleTag {
+    margin: 0 0.8rem 0.5rem 0;
+    text-align: left;
+  }
+  .addTagIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .tagContainer {
+    padding: 0.7rem;
+    background-color: #fff;
+    z-index: 3;
+    width: 80%;
+    position: absolute;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--bs-gray-400);
+
+    @media screen and (max-width: 576px) {
+      width: 70%;
+    }
+  }
+
+  .removeTag {
+    margin-left: 0.5rem;
+  }
 }

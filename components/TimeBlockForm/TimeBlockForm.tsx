@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./TimeBlockForm.module.scss";
-import IconPicker from "../IconPicker/IconPicker";
+import axios from "axios";
+import { tag } from "@/components/Tag/Tag";
 
-export type TimeBolckDate = {
+export type TimeBlockDate = {
   date: Date;
 };
 
-function TimeBlockForm({ date }: TimeBolckDate) {
+function TimeBlockForm({ date }: TimeBlockDate) {
   const [start, setStart] = useState(
     new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
   );
@@ -16,11 +17,14 @@ function TimeBlockForm({ date }: TimeBolckDate) {
     new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
   );
   const [toggle, setToggle] = useState(false);
-  const [icon, setIcon] = useState({
-    class: "bi-emoji-smile-fill",
-    path: "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z",
-  });
+  const [tagList, setTagList] = useState(new Set<tag>());
+  const [allTags, setAllTags] = useState(Array<tag>);
 
+  useEffect(() => {
+    axios.get("/api/tag").then((res) => {
+      setAllTags(res.data.tags);
+    });
+  }, []);
   useEffect(() => {
     setStart(
       new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
@@ -35,8 +39,15 @@ function TimeBlockForm({ date }: TimeBolckDate) {
     console.log(start);
   }, [start]);
 
-  function CallBack(SelectedIcon: { class: string; path: string }) {
-    return setIcon(SelectedIcon);
+  function recordTags(tag: tag) {
+    if (tagList.size < 3) {
+      setTagList((prev) => new Set(prev.add(tag)));
+    }
+  }
+  function removeTag(tag: tag) {
+    setTagList(
+      (prev) => new Set(Array.from(prev).filter((x) => x._id != tag._id))
+    );
   }
 
   return (
@@ -51,6 +62,10 @@ function TimeBlockForm({ date }: TimeBolckDate) {
             className="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            onClick={() => {
+              setTagList(new Set());
+              setToggle(false);
+            }}
           ></button>
         </div>
         <div className="modal-body">
@@ -80,7 +95,7 @@ function TimeBlockForm({ date }: TimeBolckDate) {
                 Start
               </label>
               <DatePicker
-                className={`${styles.timepicker} timepicker`}
+                className={`${styles.timepicker}`}
                 selected={start}
                 onChange={(date) => {
                   if (date) setStart(date);
@@ -97,7 +112,7 @@ function TimeBlockForm({ date }: TimeBolckDate) {
                 End
               </label>
               <DatePicker
-                className={`${styles.timepicker} timepicker`}
+                className={`${styles.timepicker}`}
                 selected={end}
                 onChange={(date) => {
                   console.log(date);
@@ -115,26 +130,91 @@ function TimeBlockForm({ date }: TimeBolckDate) {
                 Tag
               </label>
               <div
-                className={`col-sm-3 my-3 mt-sm-1 ${styles.relative}`}
+                className={`${styles.addTag}`}
                 onClick={() => setToggle(!toggle)}
               >
-                <div className={`${styles.iconWrapper}`}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className={`${styles.iconDefault} bi ${icon.class}}`}
-                    viewBox="0 0 16 16"
-                  >
-                    <path d={icon.path} />
-                  </svg>
-                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className={`${styles.addTagIcon} bi bi-plus-circle-fill`}
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                </svg>
                 {toggle ? (
-                  <div className={`${styles.iconPickContainer}`}>
-                    <IconPicker handleCallBack={CallBack} />
+                  <div className={`${styles.tagContainer}`}>
+                    {allTags.map((tag, index) => {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          className={`btn ${styles.singleTag}`}
+                          style={{ backgroundColor: tag.bgColor }}
+                          onClick={(e) => recordTags(tag)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className={`bi ${tag.iconClass}}`}
+                            viewBox="0 0 16 16"
+                            style={{ marginRight: "0.5rem" }}
+                          >
+                            <path d={tag.iconPath} />
+                          </svg>
+                          {tag.title}
+                        </button>
+                      );
+                    })}
                   </div>
                 ) : null}
+              </div>
+              <span style={{ fontSize: "0.8rem", color: "#747474" }}>
+                (Maximum 3 tags)
+              </span>
+              <div id="TimeBlockTags" style={{ paddingLeft: "0" }}>
+                {tagList.size > 0
+                  ? Array.from(tagList).map((tag, index) => {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          className={`btn ${styles.singleTag}`}
+                          style={{ backgroundColor: tag.bgColor }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className={`bi ${tag.iconClass}}`}
+                            viewBox="0 0 16 16"
+                            style={{ marginRight: "0.5rem" }}
+                          >
+                            <path d={tag.iconPath} />
+                          </svg>
+                          {tag.title}
+                          <span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className={`bi bi-x-circle ${styles.removeTag}`}
+                              viewBox="0 0 16 16"
+                              onClick={() => removeTag(tag)}
+                            >
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                          </span>
+                        </button>
+                      );
+                    })
+                  : null}
               </div>
             </div>
           </form>
@@ -144,6 +224,10 @@ function TimeBlockForm({ date }: TimeBolckDate) {
             type="button"
             className="btn btn-secondary"
             data-bs-dismiss="modal"
+            onClick={() => {
+              setTagList(new Set());
+              setToggle(false);
+            }}
           >
             Close
           </button>
