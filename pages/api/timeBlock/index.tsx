@@ -2,6 +2,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/database/mongodb";
 import { ObjectId } from "mongodb";
 
+export const getAllTimeBlocks = async (date: string): Promise<{}> => {
+  const mongoClient = await clientPromise;
+  const data = await mongoClient
+    .db("time-leverage")
+    .collection("time-blocks")
+    .find({ date: new Date(date) })
+    .toArray();
+
+  return JSON.parse(JSON.stringify(data));
+};
+
 export const createTimeBlock = async (timeBlock: any): Promise<ObjectId> => {
   const mongoClient = await clientPromise;
 
@@ -19,8 +30,9 @@ export default async function handler(
 ) {
   //   console.log(req.query.date);
   if (req.method === "GET" && req.query.date) {
-    // const data = await getAllTimeBlocks(req.query.date as string);
-    // res.json({ tags: data });
+    const data = await getAllTimeBlocks(req.query.date as string);
+
+    res.json({ tags: data });
   } else if (req.method === "POST") {
     if (req.body) {
       console.log(req.body);

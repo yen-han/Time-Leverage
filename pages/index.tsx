@@ -21,6 +21,17 @@ export default function Home() {
     title: "Title",
     description: "Description",
   };
+  useEffect(() => {
+    axios
+      .get("/api/timeBlock", {
+        params: {
+          date: selectDate,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }, [selectDate]);
 
   return (
     <>
