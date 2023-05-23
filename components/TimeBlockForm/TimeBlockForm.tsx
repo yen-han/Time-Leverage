@@ -71,30 +71,27 @@ function TimeBlockForm({ date }: TimeBlockDate) {
         <div className="modal-body">
           <form className={`${styles.NewTimeBlockForm} row g-3`}>
             <div className="col-12">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label htmlFor="TimeBlockTitle" className="form-label">
                 Title
               </label>
               <input
                 type="email"
                 className="form-control"
-                id="exampleFormControlInput1"
+                id="TimeBlockTitle"
               />
             </div>
             <div className="col-12">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label htmlFor="TimeBlockDesc" className="form-label">
                 Description
               </label>
-              <input
-                type="email"
-                className="form-control"
-                id="exampleFormControlInput1"
-              />
+              <input type="email" className="form-control" id="TimeBlockDesc" />
             </div>
             <div className="col-md-6">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label htmlFor="TimeBlockStart" className="form-label">
                 Start
               </label>
               <DatePicker
+                id="TimeBlockStart"
                 className={`${styles.timepicker}`}
                 selected={start}
                 onChange={(date) => {
@@ -108,10 +105,11 @@ function TimeBlockForm({ date }: TimeBlockDate) {
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label htmlFor="TimeBlockEnd" className="form-label">
                 End
               </label>
               <DatePicker
+                id="TimeBlockEnd"
                 className={`${styles.timepicker}`}
                 selected={end}
                 onChange={(date) => {
@@ -126,7 +124,11 @@ function TimeBlockForm({ date }: TimeBlockDate) {
               />
             </div>
             <div className="col-12">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label
+                htmlFor="TimeBlockTags"
+                className="form-label"
+                onClick={() => setToggle(!toggle)}
+              >
                 Tag
               </label>
               <div
