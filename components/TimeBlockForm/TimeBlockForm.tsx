@@ -77,6 +77,11 @@ function TimeBlockForm({ date }: TimeBlockDate) {
       formData.set("TimeBlockTags", JSON.stringify(Array.from(tagList)));
       let formDataObj = Object.fromEntries(formData.entries());
       console.log(formDataObj);
+      axios.post("/api/timeBlock", formDataObj).then((res) => {
+        console.log(res);
+        setTagList(new Set());
+        setToggle(false);
+      });
     }
   }
 

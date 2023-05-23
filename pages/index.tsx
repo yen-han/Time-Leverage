@@ -8,9 +8,13 @@ import TimeBlock from "@/components/TimeBlock/TimeBlock";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimeBlockForm from "@/components/TimeBlockForm/TimeBlockForm";
+import axios from "axios";
 
 export default function Home() {
-  const [selectDate, setSelectDate] = useState(new Date());
+  let now = new Date();
+  const [selectDate, setSelectDate] = useState(
+    new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  );
   let dummyData = {
     start: new Date(2017, 4, 4, 17, 23, 42, 11),
     end: new Date(2017, 4, 4, 19, 23, 42, 11),

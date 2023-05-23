@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/database/mongodb";
-import { tag } from "@/components/Tag/Tag";
 import { ObjectId } from "mongodb";
-import NextCors from "nextjs-cors";
+
 export const getAllTags = async (): Promise<{}> => {
   const mongoClient = await clientPromise;
   const data = await mongoClient
