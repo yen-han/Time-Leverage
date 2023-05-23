@@ -36,7 +36,6 @@ function TimeBlockForm({ date }: TimeBlockDate) {
     if (end < start) {
       setEnd(start);
     }
-    console.log(start);
   }, [start]);
 
   function recordTags(tag: tag) {
@@ -48,6 +47,23 @@ function TimeBlockForm({ date }: TimeBlockDate) {
     setTagList(
       (prev) => new Set(Array.from(prev).filter((x) => x._id != tag._id))
     );
+  }
+  function onSubmit(event: any) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    formData.set(
+      "TimeBlockDate",
+      new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate()
+      ).toUTCString()
+    );
+    formData.set("TimeBlockStart", new Date(start).toUTCString());
+    formData.set("TimeBlockEnd", new Date(end).toUTCString());
+    formData.set("TimeBlockTags", JSON.stringify(Array.from(tagList)));
+    let formDataObj = Object.fromEntries(formData.entries());
+    console.log(formDataObj);
   }
 
   return (
@@ -69,22 +85,33 @@ function TimeBlockForm({ date }: TimeBlockDate) {
           ></button>
         </div>
         <div className="modal-body">
-          <form className={`${styles.NewTimeBlockForm} row g-3`}>
+          <form
+            className={`${styles.NewTimeBlockForm} row g-3`}
+            id="NewTimeBlockForm"
+            onSubmit={onSubmit}
+          >
             <div className="col-12">
               <label htmlFor="TimeBlockTitle" className="form-label">
                 Title
               </label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 id="TimeBlockTitle"
+                name="TimeBlockTitle"
+                required
               />
             </div>
             <div className="col-12">
               <label htmlFor="TimeBlockDesc" className="form-label">
                 Description
               </label>
-              <input type="email" className="form-control" id="TimeBlockDesc" />
+              <input
+                type="text"
+                className="form-control"
+                id="TimeBlockDesc"
+                name="TimeBlockDesc"
+              />
             </div>
             <div className="col-md-6">
               <label htmlFor="TimeBlockStart" className="form-label">
@@ -92,6 +119,7 @@ function TimeBlockForm({ date }: TimeBlockDate) {
               </label>
               <DatePicker
                 id="TimeBlockStart"
+                name="TimeBlockStart"
                 className={`${styles.timepicker}`}
                 selected={start}
                 onChange={(date) => {
@@ -110,6 +138,7 @@ function TimeBlockForm({ date }: TimeBlockDate) {
               </label>
               <DatePicker
                 id="TimeBlockEnd"
+                name="TimeBlockEnd"
                 className={`${styles.timepicker}`}
                 selected={end}
                 onChange={(date) => {
@@ -219,23 +248,23 @@ function TimeBlockForm({ date }: TimeBlockDate) {
                   : null}
               </div>
             </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  setTagList(new Set());
+                  setToggle(false);
+                }}
+              >
+                Close
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
           </form>
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            data-bs-dismiss="modal"
-            onClick={() => {
-              setTagList(new Set());
-              setToggle(false);
-            }}
-          >
-            Close
-          </button>
-          <button type="button" className="btn btn-primary">
-            Submit
-          </button>
         </div>
       </div>
     </div>
