@@ -48,22 +48,36 @@ function TimeBlockForm({ date }: TimeBlockDate) {
       (prev) => new Set(Array.from(prev).filter((x) => x._id != tag._id))
     );
   }
+  useEffect(() => {
+    if (tagList.size > 0) {
+      let error = document.getElementById("tagError");
+      error?.classList.remove("d-block");
+      error?.classList.add("d-none");
+    }
+  }, [tagList]);
+
   function onSubmit(event: any) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    formData.set(
-      "TimeBlockDate",
-      new Date(
-        start.getFullYear(),
-        start.getMonth(),
-        start.getDate()
-      ).toUTCString()
-    );
-    formData.set("TimeBlockStart", new Date(start).toUTCString());
-    formData.set("TimeBlockEnd", new Date(end).toUTCString());
-    formData.set("TimeBlockTags", JSON.stringify(Array.from(tagList)));
-    let formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    let error = document.getElementById("tagError");
+    if (tagList.size == 0) {
+      error?.classList.remove("d-none");
+      error?.classList.add("d-block");
+    } else {
+      const formData = new FormData(event.target);
+      formData.set(
+        "TimeBlockDate",
+        new Date(
+          start.getFullYear(),
+          start.getMonth(),
+          start.getDate()
+        ).toUTCString()
+      );
+      formData.set("TimeBlockStart", new Date(start).toUTCString());
+      formData.set("TimeBlockEnd", new Date(end).toUTCString());
+      formData.set("TimeBlockTags", JSON.stringify(Array.from(tagList)));
+      let formDataObj = Object.fromEntries(formData.entries());
+      console.log(formDataObj);
+    }
   }
 
   return (
@@ -92,7 +106,7 @@ function TimeBlockForm({ date }: TimeBlockDate) {
           >
             <div className="col-12">
               <label htmlFor="TimeBlockTitle" className="form-label">
-                Title
+                Title <span className="text-danger">*</span>
               </label>
               <input
                 type="text"
@@ -158,7 +172,7 @@ function TimeBlockForm({ date }: TimeBlockDate) {
                 className="form-label"
                 onClick={() => setToggle(!toggle)}
               >
-                Tag
+                Tag <span className="text-danger">*</span>
               </label>
               <div
                 className={`${styles.addTag}`}
@@ -246,6 +260,14 @@ function TimeBlockForm({ date }: TimeBlockDate) {
                       );
                     })
                   : null}
+              </div>
+              <div
+                className="alert alert-danger d-flex align-items-center d-none"
+                role="alert"
+                id="tagError"
+                style={{ marginTop: "0.5rem" }}
+              >
+                <div>Select at least 1 tag.</div>
               </div>
             </div>
             <div className="modal-footer">
