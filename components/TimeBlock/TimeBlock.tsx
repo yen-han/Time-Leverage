@@ -1,4 +1,5 @@
 import { tag } from "@/components/Tag/Tag";
+import axios from "axios";
 export type timeBlock = {
   _id: string;
   start: Date;
@@ -19,7 +20,9 @@ function TimeBlock(timeBlock: any) {
     return `${hours}h ${minutes}m`;
   }
   function trashBlock(id: string) {
-    console.log(id);
+    axios.delete(`/api/timeBlock/${id}`).then((res) => {
+      console.log(res);
+    });
   }
   return (
     <div
