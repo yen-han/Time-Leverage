@@ -32,7 +32,7 @@ export default async function handler(
   if (req.method === "GET" && req.query.date) {
     const data = await getAllTimeBlocks(req.query.date as string);
 
-    res.json({ tags: data });
+    res.json({ timeBlocks: data });
   } else if (req.method === "POST") {
     if (req.body) {
       console.log(req.body);

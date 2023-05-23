@@ -15,6 +15,7 @@ export default function Home() {
   const [selectDate, setSelectDate] = useState(
     new Date(now.getFullYear(), now.getMonth(), now.getDate())
   );
+  const [timeBlocks, setTimeBlocks] = useState([]);
   let dummyData = {
     start: new Date(2017, 4, 4, 17, 23, 42, 11),
     end: new Date(2017, 4, 4, 19, 23, 42, 11),
@@ -29,7 +30,7 @@ export default function Home() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        setTimeBlocks(res.data.timeBlocks);
       });
   }, [selectDate]);
 
@@ -57,7 +58,9 @@ export default function Home() {
                   if (date) setSelectDate(date);
                 }}
               />
-              <TimeBlock data={dummyData} />
+              {timeBlocks.map((block, index) => (
+                <TimeBlock data={block} key={index} />
+              ))}
               <button
                 type="button"
                 className="btn btn-primary"
