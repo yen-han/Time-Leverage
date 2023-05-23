@@ -1,30 +1,31 @@
 import { tag } from "@/components/Tag/Tag";
-export type Props = {
-  data: {
-    start: Date;
-    end: Date;
-    title: string;
-    description: string;
-    tags: tag[];
-  };
+export type timeBlock = {
+  start: Date;
+  end: Date;
+  title: string;
+  desc: string;
+  tags: tag[];
 };
-function TimeBlock({ data }: Props) {
+function TimeBlock(timeBlock: any) {
   function calculateTime() {
-    let time = new Date(data.end).getTime() - new Date(data.start).getTime();
+    let time =
+      new Date(timeBlock.timeBlock.end).getTime() -
+      new Date(timeBlock.timeBlock.start).getTime();
     let hours = Math.floor(time / 3600000);
     let minutes = Math.floor((time - hours * 3600000) / 60000);
     return `${hours}h ${minutes}m`;
   }
+  // console.log(timeBlock.timeBlock);
   return (
-    <div className="card">
+    <div className="card" style={{ marginBottom: "1rem" }}>
       <div className="card-body">
         <h6 className="card-subtitle mb-2 text-body-secondary">
           {calculateTime()}
         </h6>
-        <h5 className="card-title">{data.title}</h5>
-        <p className="card-text">{data.description}</p>
+        <h5 className="card-title">{timeBlock.timeBlock.title}</h5>
+        <p className="card-text">{timeBlock.timeBlock.desc}</p>
         <div style={{ marginBottom: "1rem" }}>
-          {data.tags.map((tag, index) => {
+          {timeBlock.timeBlock.tags.map((tag: tag, index: number) => {
             return (
               <button
                 type="button"

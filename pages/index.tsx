@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
@@ -9,19 +9,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimeBlockForm from "@/components/TimeBlockForm/TimeBlockForm";
 import axios from "axios";
-
+import RemainingBlock from "@/components/RemainingBlock/RemainingBlock";
+import { timeBlock } from "@/components/TimeBlock/TimeBlock";
 export default function Home() {
   let now = new Date();
   const [selectDate, setSelectDate] = useState(
     new Date(now.getFullYear(), now.getMonth(), now.getDate())
   );
-  const [timeBlocks, setTimeBlocks] = useState([]);
-  let dummyData = {
-    start: new Date(2017, 4, 4, 17, 23, 42, 11),
-    end: new Date(2017, 4, 4, 19, 23, 42, 11),
-    title: "Title",
-    description: "Description",
-  };
+  const [timeBlocks, setTimeBlocks] = useState(Array<timeBlock>);
+  const [remaining, setRemaining] = useState({ hour: 24, minute: 0 });
   useEffect(() => {
     axios
       .get("/api/timeBlock", {
@@ -32,7 +28,15 @@ export default function Home() {
       .then((res) => {
         setTimeBlocks(res.data.timeBlocks);
       });
-  }, [selectDate]);
+    let sum = 0;
+    timeBlocks.forEach((block) => {
+      sum += new Date(block.end).getTime() - new Date(block.start).getTime();
+    });
+    let left = 86400000 - sum;
+    let hours = Math.floor(left / 3600000);
+    let minutes = Math.floor((left - hours * 3600000) / 60000);
+    setRemaining({ hour: hours, minute: minutes });
+  }, [timeBlocks, selectDate]);
 
   return (
     <>
@@ -59,14 +63,17 @@ export default function Home() {
                 }}
               />
               {timeBlocks.map((block, index) => (
-                <TimeBlock data={block} key={index} />
+                <TimeBlock timeBlock={block} key={index} />
               ))}
+              {!(remaining.hour == 0 && remaining.minute == 0) && (
+                <RemainingBlock data={remaining} />
+              )}
               <button
                 type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#TimeBlockModal"
-                style={{ marginTop: "1rem" }}
+                style={{ marginTop: "1rem", marginBottom: "2rem" }}
               >
                 {" "}
                 <svg
