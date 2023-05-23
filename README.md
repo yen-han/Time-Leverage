@@ -2,12 +2,19 @@
 
 Time tracking application
 
+## Key Features
+
+- Data structure: Array, Set(to track Tag list without duplication)
+- Responsive design
+- Database integration: Create, Read, Update, Delete operation for Tag, TimeBlock using MongoDB.
+- API integration: CRUD operation is performed by API calls.
+
 ## Built With
 
 - NextJS
 - React
 - TypeScript
-- MongoDB (TBD)
+- MongoDB
 - REST API
 - Bootstrap
 - SCSS
