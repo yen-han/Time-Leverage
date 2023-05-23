@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
@@ -7,6 +7,7 @@ import Chart from "@/components/Chart/Chart";
 import TimeBlock from "@/components/TimeBlock/TimeBlock";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TimeBlockForm from "@/components/TimeBlockForm/TimeBlockForm";
 
 export default function Home() {
   const [selectDate, setSelectDate] = useState(new Date());
@@ -16,6 +17,7 @@ export default function Home() {
     title: "Title",
     description: "Description",
   };
+
   return (
     <>
       <Head>
@@ -41,8 +43,37 @@ export default function Home() {
                 }}
               />
               <TimeBlock data={dummyData} />
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#TimeBlockModal"
+                style={{ marginTop: "1rem" }}
+              >
+                {" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className={`bi bi-plus ${styles.newTimeIcon}`}
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+                New Time Block
+              </button>
             </div>
           </div>
+        </div>
+        <div
+          className="modal fade"
+          id="TimeBlockModal"
+          tabIndex={-1}
+          aria-labelledby="newTimeBlock"
+          aria-hidden="true"
+        >
+          <TimeBlockForm date={selectDate} />
         </div>
       </main>
     </>
