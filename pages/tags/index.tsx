@@ -30,7 +30,7 @@ export default function Tags() {
 
   return (
     <>
-      <div className={`${styles.Tags} bg-warning bg-opacity-10`}>
+      <div className={`${styles.Tags}`}>
         <Menu />
         <div className="container mt-5 px-5 px-sm-2">
           <div className="row">

@@ -46,7 +46,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.Home} bg-warning bg-opacity-10`}>
+      <main className={`${styles.Home}`}>
         <Menu />
         <div className={`container mt-5 px-5 px-sm-2`}>
           <div className="row">
