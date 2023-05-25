@@ -19,6 +19,19 @@ function TimeBlock(timeBlock: any) {
     let minutes = Math.floor((time - hours * 3600000) / 60000);
     return `${hours}h ${minutes}m`;
   }
+  function formatTime(date: Date) {
+    let clock = "am";
+    let hours = date.getHours();
+    if (hours > 12) {
+      hours -= 12;
+      clock = "pm";
+    }
+    let minutes;
+    date.getMinutes() < 10
+      ? (minutes = `0${date.getMinutes()}`)
+      : (minutes = date.getMinutes());
+    return `${hours}:${minutes} ${clock}`;
+  }
   function trashBlock(id: string) {
     axios.delete(`/api/timeBlock/${id}`).then((res) => {
       console.log(res);
@@ -37,14 +50,7 @@ function TimeBlock(timeBlock: any) {
           Duration: {calculateTime()}
         </h6>
         <p className="mb-2 text-body-tertiary">
-          {startTime.getHours()}:
-          {startTime.getMinutes() < 10
-            ? `0${startTime.getMinutes()}`
-            : startTime.getMinutes()}
-          ~{endTime.getHours()}:
-          {endTime.getMinutes() < 10
-            ? `0${endTime.getMinutes()}`
-            : endTime.getMinutes()}
+          {formatTime(startTime)} ~ {formatTime(endTime)}
         </p>
         <h5 className="card-title">{timeBlock.timeBlock.title}</h5>
         <p className="card-text">{timeBlock.timeBlock.desc}</p>
