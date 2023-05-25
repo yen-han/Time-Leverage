@@ -24,6 +24,9 @@ function TimeBlock(timeBlock: any) {
       console.log(res);
     });
   }
+  function modifyBlock(data: any) {
+    return timeBlock.handleCallBack(data);
+  }
   return (
     <div
       className="card"
@@ -52,7 +55,11 @@ function TimeBlock(timeBlock: any) {
                 type="button"
                 key={index}
                 className={`btn`}
-                style={{ backgroundColor: tag.bgColor, cursor: "default" }}
+                style={{
+                  backgroundColor: tag.bgColor,
+                  cursor: "default",
+                  marginRight: "0.4rem",
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +82,9 @@ function TimeBlock(timeBlock: any) {
             type="button"
             className="btn btn-light"
             style={{ marginRight: "0.4rem" }}
+            data-bs-toggle="modal"
+            data-bs-target="#TimeBlockModal"
+            onClick={(e) => modifyBlock(timeBlock)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

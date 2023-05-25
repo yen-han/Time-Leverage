@@ -13,6 +13,8 @@ import RemainingBlock from "@/components/RemainingBlock/RemainingBlock";
 import { timeBlock } from "@/components/TimeBlock/TimeBlock";
 export default function Home() {
   let now = new Date();
+  const [type, setType] = useState("new");
+  const [selectedBlock, setSelectedBlock] = useState({});
   const [selectDate, setSelectDate] = useState(
     new Date(now.getFullYear(), now.getMonth(), now.getDate())
   );
@@ -38,6 +40,11 @@ export default function Home() {
     setRemaining({ hour: hours, minute: minutes });
   }, [timeBlocks, selectDate]);
 
+  function CallBack(timeBlock: any) {
+    setSelectedBlock(timeBlock);
+    setType("edit");
+    return;
+  }
   return (
     <>
       <Head>
@@ -63,7 +70,11 @@ export default function Home() {
                 }}
               />
               {timeBlocks.map((block, index) => (
-                <TimeBlock timeBlock={block} key={index} />
+                <TimeBlock
+                  timeBlock={block}
+                  key={index}
+                  handleCallBack={CallBack}
+                />
               ))}
               {!(remaining.hour == 0 && remaining.minute == 0) && (
                 <RemainingBlock data={remaining} />
@@ -74,8 +85,10 @@ export default function Home() {
                 data-bs-toggle="modal"
                 data-bs-target="#TimeBlockModal"
                 style={{ marginTop: "1rem", marginBottom: "2rem" }}
+                onClick={() => {
+                  setType("new");
+                }}
               >
-                {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -91,6 +104,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div
           className="modal fade"
           id="TimeBlockModal"
@@ -98,7 +112,11 @@ export default function Home() {
           aria-labelledby="newTimeBlock"
           aria-hidden="true"
         >
-          <TimeBlockForm date={selectDate} />
+          <TimeBlockForm
+            type={type}
+            block={selectedBlock}
+            incomingDate={selectDate}
+          />
         </div>
       </main>
     </>

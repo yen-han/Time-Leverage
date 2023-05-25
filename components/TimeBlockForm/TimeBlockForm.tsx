@@ -6,15 +6,24 @@ import axios from "axios";
 import { tag } from "@/components/Tag/Tag";
 
 export type TimeBlockDate = {
-  date: Date;
+  type: string;
+  block: any;
+  incomingDate: Date;
 };
 
-function TimeBlockForm({ date }: TimeBlockDate) {
+function TimeBlockForm({ type, block, incomingDate }: any) {
+  const [date, setDate] = useState(incomingDate);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  useEffect(() => {
+    console.log(type, block, incomingDate);
+  }, [type, block, incomingDate]);
+
   const [start, setStart] = useState(
-    new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+    type == "edit" ? new Date(block.timeBlock.start) : date
   );
   const [end, setEnd] = useState(
-    new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+    type == "edit" ? new Date(block.timeBlock.end) : date
   );
   const [toggle, setToggle] = useState(false);
   const [tagList, setTagList] = useState(new Set<tag>());
@@ -26,11 +35,18 @@ function TimeBlockForm({ date }: TimeBlockDate) {
     });
   }, []);
   useEffect(() => {
-    setStart(
-      new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
-    );
-    setEnd(start);
-  }, [date]);
+    setDate(incomingDate);
+  }, [incomingDate]);
+
+  useEffect(() => {
+    setStart(type == "edit" ? new Date(block.timeBlock.start) : date);
+    setEnd(type == "edit" ? new Date(block.timeBlock.end) : date);
+    setTitle(type == "edit" ? block.timeBlock.title : "");
+    setDesc(type == "edit" ? block.timeBlock.desc : "");
+    type == "edit"
+      ? setTagList(new Set(block.timeBlock.tags))
+      : setTagList(new Set<tag>());
+  }, [type, block]);
 
   useEffect(() => {
     if (end < start) {
@@ -90,7 +106,8 @@ function TimeBlockForm({ date }: TimeBlockDate) {
       <div className="modal-content">
         <div className="modal-header">
           <h1 className="modal-title fs-5" id="newTimeBlock">
-            {start.getMonth() + 1 + "/" + start.getDate()} New Time Block
+            {date.getMonth() + 1 + "/" + date.getDate()}{" "}
+            {type == "edit" ? "Edit" : "New"} Time Block
           </h1>
           <button
             type="button"
@@ -119,6 +136,10 @@ function TimeBlockForm({ date }: TimeBlockDate) {
                 id="TimeBlockTitle"
                 name="TimeBlockTitle"
                 required
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
             </div>
             <div className="col-12">
@@ -130,6 +151,10 @@ function TimeBlockForm({ date }: TimeBlockDate) {
                 className="form-control"
                 id="TimeBlockDesc"
                 name="TimeBlockDesc"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
               />
             </div>
             <div className="col-md-6">
