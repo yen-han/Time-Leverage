@@ -35,7 +35,6 @@ export default async function handler(
     res.json({ timeBlocks: data });
   } else if (req.method === "POST") {
     if (req.body) {
-      console.log(req.body);
       const timeBlock = {
         userId: "0",
         title: req.body.TimeBlockTitle,

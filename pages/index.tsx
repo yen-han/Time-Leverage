@@ -28,8 +28,13 @@ export default function Home() {
         },
       })
       .then((res) => {
-        setTimeBlocks(res.data.timeBlocks);
+        setTimeBlocks(
+          res.data.timeBlocks.sort((a: any, b: any) => {
+            return new Date(a.start).getTime() - new Date(b.start).getTime();
+          })
+        );
       });
+
     let sum = 0;
     timeBlocks.forEach((block) => {
       sum += new Date(block.end).getTime() - new Date(block.start).getTime();

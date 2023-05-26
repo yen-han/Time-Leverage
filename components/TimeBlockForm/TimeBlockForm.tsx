@@ -15,9 +15,6 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
   const [date, setDate] = useState(incomingDate);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  useEffect(() => {
-    console.log(type, block, incomingDate);
-  }, [type, block, incomingDate]);
 
   const [start, setStart] = useState(
     type == "edit" ? new Date(block.timeBlock.start) : date
