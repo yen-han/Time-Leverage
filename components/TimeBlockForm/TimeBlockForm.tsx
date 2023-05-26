@@ -92,12 +92,27 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
       formData.set("TimeBlockEnd", new Date(end).toUTCString());
       formData.set("TimeBlockTags", JSON.stringify(Array.from(tagList)));
       let formDataObj = Object.fromEntries(formData.entries());
-      console.log(formDataObj);
-      axios.post("/api/timeBlock", formDataObj).then((res) => {
-        console.log(res);
-        setTagList(new Set());
-        setToggle(false);
-      });
+
+      if (type == "edit") {
+        axios
+          .put(`/api/timeBlock/${block.timeBlock._id}`, formDataObj)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios.post("/api/timeBlock", formDataObj).then((res) => {
+          console.log(res);
+          setTitle("");
+          setDesc("");
+          setStart(date);
+          setEnd(date);
+          setTagList(new Set());
+          setToggle(false);
+        });
+      }
     }
   }
 
