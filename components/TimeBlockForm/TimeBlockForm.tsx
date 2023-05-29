@@ -100,6 +100,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
             console.log(err);
           });
       } else {
+        console.log(formDataObj);
         axios.post("/api/timeBlock", formDataObj).then((res) => {
           console.log(res);
           setTitle("");
@@ -198,7 +199,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
                 className={`${styles.timepicker}`}
                 selected={end}
                 onChange={(date) => {
-                  console.log(date);
+                  // console.log(date);
                   if (date) setEnd(date);
                 }}
                 showTimeSelect
