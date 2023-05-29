@@ -23,7 +23,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
     type == "edit" ? new Date(block.timeBlock.end) : date
   );
   const [toggle, setToggle] = useState(false);
-  const [tagList, setTagList] = useState(new Set<tag>());
+  const [tagList, setTagList] = useState(new Set<string>());
   const [allTags, setAllTags] = useState(Array<tag>);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
     setDesc(type == "edit" ? block.timeBlock.desc : "");
     type == "edit"
       ? setTagList(new Set(block.timeBlock.tags))
-      : setTagList(new Set<tag>());
+      : setTagList(new Set<string>());
   }, [type, block]);
 
   useEffect(() => {
@@ -53,13 +53,11 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
 
   function recordTags(tag: tag) {
     if (tagList.size < 3) {
-      setTagList((prev) => new Set(prev.add(tag)));
+      setTagList((prev) => new Set(prev.add(tag._id)));
     }
   }
   function removeTag(tag: tag) {
-    setTagList(
-      (prev) => new Set(Array.from(prev).filter((x) => x._id != tag._id))
-    );
+    setTagList((prev) => new Set(Array.from(prev).filter((x) => x != tag._id)));
   }
   useEffect(() => {
     if (tagList.size > 0) {
@@ -199,7 +197,6 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
                 className={`${styles.timepicker}`}
                 selected={end}
                 onChange={(date) => {
-                  // console.log(date);
                   if (date) setEnd(date);
                 }}
                 showTimeSelect
@@ -266,25 +263,29 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
               <div id="TimeBlockTags" style={{ paddingLeft: "0" }}>
                 {tagList.size > 0
                   ? Array.from(tagList).map((tag, index) => {
+                      let tagInfo: any = {};
+                      allTags.map((theTag) => {
+                        if (tag === theTag._id) tagInfo = theTag;
+                      });
                       return (
                         <button
                           type="button"
                           key={index}
                           className={`btn ${styles.singleTag}`}
-                          style={{ backgroundColor: tag.bgColor }}
+                          style={{ backgroundColor: tagInfo.bgColor }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
                             fill="currentColor"
-                            className={`bi ${tag.iconClass}}`}
+                            className={`bi ${tagInfo.iconClass}}`}
                             viewBox="0 0 16 16"
                             style={{ marginRight: "0.5rem" }}
                           >
-                            <path d={tag.iconPath} />
+                            <path d={tagInfo.iconPath} />
                           </svg>
-                          {tag.title}
+                          {tagInfo.title}
                           <span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +294,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
                               fill="currentColor"
                               className={`bi bi-x-circle ${styles.removeTag}`}
                               viewBox="0 0 16 16"
-                              onClick={() => removeTag(tag)}
+                              onClick={() => removeTag(tagInfo)}
                             >
                               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />

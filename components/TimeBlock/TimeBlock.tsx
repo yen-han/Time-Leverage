@@ -1,5 +1,6 @@
 import { tag } from "@/components/Tag/Tag";
 import axios from "axios";
+import { useEffect, useState } from "react";
 export type timeBlock = {
   _id: string;
   start: Date;
@@ -13,6 +14,18 @@ function TimeBlock(timeBlock: any) {
     new Date(timeBlock.timeBlock.start),
     new Date(timeBlock.timeBlock.end),
   ];
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/tag")
+      .then((res) => {
+        setTags(res.data.tags);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   function calculateTime() {
     let time = endTime.getTime() - startTime.getTime();
     let hours = Math.floor(time / 3600000);
@@ -56,13 +69,19 @@ function TimeBlock(timeBlock: any) {
         <p className="card-text">{timeBlock.timeBlock.desc}</p>
         <div>
           {timeBlock.timeBlock.tags.map((tag: tag, index: number) => {
+            let tagInfo: any = {};
+            tags.map((item: any) => {
+              if (item._id === tag) {
+                tagInfo = item;
+              }
+            });
             return (
               <button
                 type="button"
                 key={index}
                 className={`btn`}
                 style={{
-                  backgroundColor: tag.bgColor,
+                  backgroundColor: tagInfo.bgColor,
                   cursor: "default",
                   marginRight: "0.4rem",
                 }}
@@ -72,13 +91,13 @@ function TimeBlock(timeBlock: any) {
                   width="16"
                   height="16"
                   fill="currentColor"
-                  className={`bi ${tag.iconClass}}`}
+                  className={`bi ${tagInfo.iconClass}}`}
                   viewBox="0 0 16 16"
                   style={{ marginRight: "0.5rem" }}
                 >
-                  <path d={tag.iconPath} />
+                  <path d={tagInfo.iconPath} />
                 </svg>
-                {tag.title}
+                {tagInfo.title}
               </button>
             );
           })}

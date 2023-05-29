@@ -44,7 +44,7 @@ function Chart(blocks: any) {
     blocks.blocks.forEach((block: any) => {
       block.tags.forEach((blockTag: any) => {
         prep.forEach((tag: any) => {
-          if (blockTag._id === tag.id) {
+          if (blockTag === tag.id) {
             sum +=
               new Date(block.end).getTime() - new Date(block.start).getTime();
             tag.value +=
