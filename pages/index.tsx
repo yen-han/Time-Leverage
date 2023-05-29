@@ -34,7 +34,7 @@ export default function Home() {
           })
         );
       });
-
+    // Remaining block calculation
     let sum = 0;
     timeBlocks.forEach((block) => {
       sum += new Date(block.end).getTime() - new Date(block.start).getTime();
@@ -63,7 +63,7 @@ export default function Home() {
         <div className={`container mt-5 px-5 px-sm-2`}>
           <div className="row">
             <div className="col-sm-5 col-xs-12 mb-5">
-              <Chart />
+              <Chart blocks={timeBlocks} />
             </div>
             <div className="col-sm-1 col-xs-12"></div>
             <div className={`col-sm-6 col-xs-12`}>
