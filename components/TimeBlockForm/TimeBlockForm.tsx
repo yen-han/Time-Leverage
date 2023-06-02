@@ -43,7 +43,7 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
     type == "edit"
       ? setTagList(new Set(block.timeBlock.tags))
       : setTagList(new Set<string>());
-  }, [type, block]);
+  }, [type, block, date]);
 
   useEffect(() => {
     if (end < start) {
@@ -78,9 +78,9 @@ function TimeBlockForm({ type, block, incomingDate }: any) {
       formData.set(
         "TimeBlockDate",
         new Date(
-          start.getFullYear(),
-          start.getMonth(),
-          start.getDate()
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
         ).toUTCString()
       );
       formData.set("TimeBlockStart", new Date(start).toUTCString());
