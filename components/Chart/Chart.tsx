@@ -39,7 +39,17 @@ function Chart(blocks: any) {
         color: tag.bgColor,
       };
     });
-
+    if (blocks.blocks.length === 0)
+      return setData([
+        {
+          id: "none",
+          title: "No Data",
+          class: "none",
+          path: "none",
+          value: 360,
+          color: "#ced4da",
+        },
+      ]);
     let sum = 0;
     blocks.blocks.forEach((block: any) => {
       block.tags.forEach((blockTag: any) => {
@@ -65,22 +75,26 @@ function Chart(blocks: any) {
       animationDuration={300}
       data={data}
       label={({ x, y, dx, dy, dataEntry }) => {
-        return (
-          <svg
-            x={x + dx - 5}
-            y={y + dy - 5}
-            dx={dx}
-            dy={dy}
-            xmlns="http://www.w3.org/2000/svg"
-            width="10%"
-            height="10%"
-            fill="currentColor"
-            className={`${dataEntry.class} bi`}
-            viewBox="0 0 16 16"
-          >
-            <path d={dataEntry.path} />
-          </svg>
-        );
+        if (dataEntry.id === "none") {
+          return dataEntry.title;
+        } else {
+          return (
+            <svg
+              x={x + dx - 5}
+              y={y + dy - 5}
+              dx={dx}
+              dy={dy}
+              xmlns="http://www.w3.org/2000/svg"
+              width="10%"
+              height="10%"
+              fill="currentColor"
+              className={`${dataEntry.class} bi`}
+              viewBox="0 0 16 16"
+            >
+              <path d={dataEntry.path} />
+            </svg>
+          );
+        }
       }}
       labelPosition={60}
       labelStyle={{
