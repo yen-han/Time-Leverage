@@ -13,6 +13,20 @@ export const getAllTimeBlocks = async (date: string): Promise<{}> => {
   return JSON.parse(JSON.stringify(data));
 };
 
+export const getRangeTimeBlocks = async (
+  start: string,
+  end: string
+): Promise<{}> => {
+  const mongoClient = await clientPromise;
+  const data = await mongoClient
+    .db("time-leverage")
+    .collection("time-blocks")
+    .find({ date: { $gte: new Date(start), $lte: new Date(end) } })
+    .toArray();
+
+  return JSON.parse(JSON.stringify(data));
+};
+
 export const createTimeBlock = async (timeBlock: any): Promise<ObjectId> => {
   const mongoClient = await clientPromise;
 
@@ -28,11 +42,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  //   console.log(req.query.date);
-  if (req.method === "GET" && req.query.date) {
-    const data = await getAllTimeBlocks(req.query.date as string);
-
-    res.json({ timeBlocks: data });
+  if (req.method === "GET") {
+    if (req.query.start && req.query.end) {
+      const data = await getRangeTimeBlocks(
+        req.query.start as string,
+        req.query.end as string
+      );
+      res.json({ timeBlocks: data });
+    } else {
+      const data = await getAllTimeBlocks(req.query.date as string);
+      res.json({ timeBlocks: data });
+    }
   } else if (req.method === "POST") {
     if (req.body) {
       const timeBlock = {
@@ -44,7 +64,6 @@ export default async function handler(
         end: new Date(req.body.TimeBlockEnd),
         tags: JSON.parse(req.body.TimeBlockTags),
       };
-      //   console.log(timeBlock);
       const insertedId = await createTimeBlock(timeBlock);
       res.status(200).json(insertedId);
     } else {
