@@ -6,6 +6,7 @@ import styles from "./statistics.module.scss";
 import Chart from "@/components/Chart/Chart";
 import axios from "axios";
 import { timeBlock } from "@/components/TimeBlock/TimeBlock";
+import Details from "@/components/Details/Details";
 export default function Statistics() {
   let now = new Date();
   const [startDate, setStartDate] = useState(
@@ -54,6 +55,7 @@ export default function Statistics() {
               endDate={endDate}
               selectsRange
             />
+            <Details blocks={timeBlocks} />
           </div>
         </div>
       </div>
