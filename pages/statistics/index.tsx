@@ -1,4 +1,3 @@
-import Menu from "@/components/Menu/Menu";
 import DatePicker from "react-datepicker";
 import { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -39,7 +38,6 @@ export default function Statistics() {
   }, [startDate, endDate]);
   return (
     <div>
-      <Menu />
       <div className={`container mt-5 px-5 px-sm-2 ${styles.Statistics}`}>
         <div className="row">
           <div className="col-sm-5 col-xs-12 mb-5">

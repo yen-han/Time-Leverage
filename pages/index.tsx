@@ -2,7 +2,6 @@ import React, { useState, useEffect, use } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.scss";
-import Menu from "@/components/Menu/Menu";
 import Chart from "@/components/Chart/Chart";
 import TimeBlock from "@/components/TimeBlock/TimeBlock";
 import DatePicker from "react-datepicker";
@@ -59,7 +58,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.Home}`}>
-        <Menu />
         <div className={`container mt-5 px-5 px-sm-2`}>
           <div className="row">
             <div className="col-sm-5 col-xs-12 mb-5">
