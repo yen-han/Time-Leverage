@@ -3,7 +3,7 @@ import Link from "next/link";
 function Menu() {
   return (
     <nav
-      className={`navbar navbar-dark navbar-expand-lg bg-dark`}
+      className={`navbar navbar-dark navbar-expand-lg bg-dark `}
       data-bs-theme="dark"
     >
       <div className="container-fluid">
@@ -21,7 +21,7 @@ function Menu() {
         >
           <span className="navbar-toggler-icon text-warning "></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+        <div className={`collapse navbar-collapse `} id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" href="/">
@@ -36,6 +36,18 @@ function Menu() {
             <li className="nav-item">
               <Link className="nav-link" href="tags">
                 Tags
+              </Link>
+            </li>
+          </ul>
+          <ul className="navbar-nav login">
+            <li className="nav-item">
+              <Link className="nav-link" href="login">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" href="signup">
+                Sign Up
               </Link>
             </li>
           </ul>
