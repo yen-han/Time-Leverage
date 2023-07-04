@@ -1,4 +1,3 @@
-import Menu from "@/components/Menu/Menu";
 import { tag } from "@/components/Tag/Tag";
 import Tag from "@/components/Tag/Tag";
 import EditTag from "@/components/EditTag/EditTag";
@@ -31,7 +30,6 @@ export default function Tags() {
   return (
     <>
       <div className={`${styles.Tags}`}>
-        <Menu />
         <div className="container mt-5 px-5 px-sm-2">
           <div className="row">
             <div className="col-sm-6 col-xs-12">

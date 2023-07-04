@@ -1,9 +1,23 @@
 import Link from "next/link";
-
+import { useAuth } from "@/Authentication/AuthContext";
+import { useRouter } from "next/navigation";
 function Menu() {
+  const { user, logOut }: any = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    if (user.uid) {
+      try {
+        await logOut();
+        router.push("/login");
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+  };
   return (
     <nav
-      className={`navbar navbar-dark navbar-expand-lg bg-dark`}
+      className={`navbar navbar-dark navbar-expand-lg bg-dark `}
       data-bs-theme="dark"
     >
       <div className="container-fluid">
@@ -21,7 +35,7 @@ function Menu() {
         >
           <span className="navbar-toggler-icon text-warning "></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+        <div className={`collapse navbar-collapse `} id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" href="/">
@@ -38,6 +52,22 @@ function Menu() {
                 Tags
               </Link>
             </li>
+          </ul>
+          <ul className="navbar-nav login">
+            <li className="nav-item">
+              <Link className="nav-link" href="login" onClick={handleLogout}>
+                {user.uid ? "LogOut" : "Login"}
+              </Link>
+            </li>
+            {user.uid ? (
+              <></>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" href="signup">
+                  Sign Up
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

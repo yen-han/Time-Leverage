@@ -8,6 +8,9 @@ Time tracking application
 - Responsive design
 - Database integration: Create, Read, Update, Delete operation for Tag, TimeBlock using MongoDB.
 - API integration: CRUD operation is performed by API calls.
+- User Authentication with Firebase.
+
+## What I have learned?
 
 ## Built With
 
