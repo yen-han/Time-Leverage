@@ -1,11 +1,20 @@
 import React from "react";
-
+import { useAuth } from "@/Authentication/AuthContext";
+import { useRouter } from "next/router";
 const SignUp = () => {
-  function onSubmit(event: any) {
+  const { signUp }: any = useAuth();
+  const router = useRouter();
+  async function onSubmit(event: any) {
     event.preventDefault();
     const formData = new FormData(event.target);
     let formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
+    try {
+      await signUp(formDataObj.email, formDataObj.password);
+      router.push("/");
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
   return (
