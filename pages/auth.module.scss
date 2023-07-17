@@ -1,0 +1,6 @@
+.authWidth {
+  @media screen and (max-width: 576px) {
+    max-width: 100%;
+  }
+  max-width: 50%;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "@/Authentication/AuthContext";
 import { useRouter } from "next/router";
+import styles from "./auth.module.scss";
 const SignUp = () => {
   const { signUp }: any = useAuth();
   const router = useRouter();
@@ -18,12 +19,18 @@ const SignUp = () => {
   }
 
   return (
-    <div className="sign-up-form container mx-auto w-96 mt-12 border-2 border-gray-400">
+    <div
+      className={`sign-up-form container mt-5 mx-auto w-96 mt-12 border-2 border-gray-400 ${styles.authWidth}`}
+    >
       <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">
         Sign Up
       </h2>
 
-      <form action="" className="w-80 mx-auto pb-12 px-4" onSubmit={onSubmit}>
+      <form
+        action=""
+        className="w-80 mt-3 mx-auto pb-12 px-4"
+        onSubmit={onSubmit}
+      >
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email address
