@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { useAuth } from "@/Authentication/AuthContext";
 import { useRouter } from "next/router";
 import styles from "./auth.module.scss";
@@ -64,6 +65,11 @@ const Login = () => {
           Submit
         </button>
       </form>
+      <p className="text-center mt-3">
+        <Link className="link-opacity-100" href="signup">
+          Need account?
+        </Link>
+      </p>
     </div>
   );
 };
