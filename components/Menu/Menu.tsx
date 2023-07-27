@@ -35,7 +35,11 @@ function Menu() {
         >
           <span className="navbar-toggler-icon text-warning "></span>
         </button>
-        <div className={`collapse navbar-collapse `} id="navbarNavDropdown">
+        <div
+          className={`collapse navbar-collapse `}
+          id="navbarNavDropdown"
+          style={{ justifyContent: "space-between" }}
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" href="/">
