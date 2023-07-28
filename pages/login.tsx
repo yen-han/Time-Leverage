@@ -22,9 +22,9 @@ const Login = () => {
     <div
       className={`sign-up-form container mt-5 mx-auto w-96 mt-12 border-2 border-gray-400 ${styles.authWidth}`}
     >
-      <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">
+      <h1 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">
         Login
-      </h2>
+      </h1>
 
       <form
         action=""

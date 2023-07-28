@@ -45,6 +45,7 @@ export default function Statistics() {
           </div>
           <div className="col-sm-1 col-xs-12"></div>
           <div className={`col-sm-6 col-xs-12`}>
+            <h1 className={"fs-2"}>Statistics</h1>
             <DatePicker
               className={`${styles.DatePicker}`}
               selected={startDate}

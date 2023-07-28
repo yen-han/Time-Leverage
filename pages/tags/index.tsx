@@ -33,7 +33,7 @@ export default function Tags() {
         <div className="container mt-5 px-5 px-sm-2">
           <div className="row">
             <div className="col-sm-6 col-xs-12">
-              <h1 className="mb-4">Tags</h1>
+              <h1 className="mb-4 fs-2">Tags</h1>
               {tags.map((tag, index) => (
                 <Tag key={index} tag={tag} handleCallBack={CallBack} />
               ))}
