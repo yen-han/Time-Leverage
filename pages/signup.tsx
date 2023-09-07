@@ -1,10 +1,13 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/Authentication/AuthContext";
 import { useRouter } from "next/router";
 import styles from "./auth.module.scss";
 const SignUp = () => {
   const { signUp }: any = useAuth();
   const router = useRouter();
+  const [error, setError] = useState("");
+  useEffect(() => {}, [error]);
   async function onSubmit(event: any) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -15,6 +18,7 @@ const SignUp = () => {
       router.push("/");
     } catch (error: any) {
       console.log(error.message);
+      setError(error.message.replace("Firebase: ", ""));
     }
   }
 
@@ -70,6 +74,11 @@ const SignUp = () => {
             required
           />
         </div>
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           className="btn btn-primary mt-4"
