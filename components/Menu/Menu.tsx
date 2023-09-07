@@ -47,9 +47,9 @@ function Menu() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="statistics">
+              <Link className="nav-link" href="statistics">
                 Statistics
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" href="tags">
