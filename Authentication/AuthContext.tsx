@@ -38,8 +38,9 @@ export const AuthContextProvider = ({
   };
 
   const logIn = (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password);
-    setUser({ email: email, uid: password });
+    return signInWithEmailAndPassword(auth, email, password).then(() => {
+      setUser({ email: email, uid: password });
+    });
   };
 
   const logOut = async () => {

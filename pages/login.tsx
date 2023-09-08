@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/Authentication/AuthContext";
 import { useRouter } from "next/router";
@@ -6,16 +6,18 @@ import styles from "./auth.module.scss";
 const Login = () => {
   const { logIn }: any = useAuth();
   const router = useRouter();
+  const [error, setError] = useState("");
+  useEffect(() => {}, [error]);
   const onSubmit = async (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     let formDataObj = Object.fromEntries(formData.entries());
-    // console.log(formDataObj);
     try {
       await logIn(formDataObj.email, formDataObj.password);
       router.push("/");
     } catch (error: any) {
       console.log(error.message);
+      setError(error.message.replace("Firebase: ", ""));
     }
   };
   return (
@@ -57,6 +59,11 @@ const Login = () => {
             required
           />
         </div>
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           className="btn btn-primary mt-4"
