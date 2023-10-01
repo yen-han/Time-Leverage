@@ -66,6 +66,9 @@ function EditTag({ type, props }: Props) {
   function CallBack(SelectedIcon: { class: string; path: string }) {
     return setIcon(SelectedIcon);
   }
+  function enterKeyIconPicker(e: any) {
+    if (e.key === "Enter") setToggle(!toggle);
+  }
 
   return (
     <form className={`${styles.editTag} needs-validation`} onSubmit={onSubmit}>
@@ -101,6 +104,8 @@ function EditTag({ type, props }: Props) {
         <div
           className={`col-sm-3 my-3 mt-sm-1 ${styles.relative}`}
           onClick={() => setToggle(!toggle)}
+          onKeyDown={(e) => enterKeyIconPicker(e)}
+          tabIndex={0}
         >
           <div className={`${styles.iconWrapper}`}>
             <svg
